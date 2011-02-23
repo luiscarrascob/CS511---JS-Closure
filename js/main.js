@@ -268,8 +268,9 @@ function update()
 	else
 	{
 		term = r[0];
-		$("#output").html(term.toStringIndent(' '));
-		$("#result").html(term.eval());
+
+		$("#output").val(term.toStringIndent(' '));
+		$("#result").val(term.eval());
 	}
 }
 
