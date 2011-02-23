@@ -8,15 +8,15 @@ label{
     color: #aaa;
     font-size:16px;
 }
-
+#logo{float:left; margin:-8px 10px 10px 0;}
 #header{
 	background: none;
-	border-bottom: 7px solid #000;
 }
 
 #header h1{
 	font-size:60px;
 	color:#f22;
+	margin: 3px 0 0 0;
 }
 
 #header h1 span{
@@ -31,7 +31,7 @@ label{
     height: 90%;
     background: #111;
     padding:10px;
-    padding-top:5%;
+    padding-top:2%;
 }
 
 #body{
@@ -50,6 +50,7 @@ label{
 
 #body-right{
     border-left: 3px solid #050505;
+    border-top: 3px solid #050505;
 }
 
 #input, #output, #result{
@@ -64,6 +65,7 @@ label{
     color: #AAA;
     height: 500px;
     border-left: 7px solid #000;
+    border-top: 3px solid #050505;
 }
 
 #output{
@@ -71,6 +73,7 @@ label{
     color: #FFF;
     height:450px;
     border-right: 7px solid #000;
+    border-top: 3px solid #050505;
 }
 
 #result{
