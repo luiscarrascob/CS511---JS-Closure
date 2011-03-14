@@ -70,10 +70,14 @@ label{
 
 #output{
     background:#151515;
+    padding:10px;
     color: #FFF;
     height:450px;
     border-right: 7px solid #000;
     border-top: 3px solid #050505;
+    width: 95.5%;
+    height:423px;
+    overflow: scroll;
 }
 
 #result{
@@ -89,4 +93,17 @@ label{
 #footer{
     background: #000;
     border:3px solid #000;
+}
+
+.keywords{
+	color:#30A2F2;
+}
+.implies{
+	color:yellow;
+}
+.symbol{
+	color: #f22;
+}
+.wff{
+	border-bottom: 1px solid #444;
 }
