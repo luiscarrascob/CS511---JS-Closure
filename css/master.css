@@ -1,7 +1,23 @@
 .clear{clear:both;}
 body{
-    background: #030303;
+    background: #111;
     height: 100%;
+}
+
+h2{
+	color:white;
+	font-size:16px;
+	padding: 20px 0 10px 5px;
+}
+
+p{
+	color:#555;
+	margin: 0 10px;
+}
+p.example{
+	color:#FFFC3B;
+	display:block;
+	margin:5px 30px;
 }
 
 label{
@@ -25,10 +41,9 @@ label{
 
 #wrapper{
     margin: 0 auto;
-    width: 95%;
+    width: 98%;
     border: 1px solid #444;
     corner-radius: 5px;
-    height: 90%;
     background: #111;
     padding:10px;
     padding-top:2%;
@@ -49,14 +64,13 @@ label{
 }
 
 #body-right{
-    border-left: 3px solid #050505;
-    border-top: 3px solid #050505;
+    padding: 0;
 }
 
 #input, #output, #result{
     width: 100%;
     border: none;
-    font-size: 20px;
+    font-size: 14px;
 }
 
 #input{
@@ -64,7 +78,8 @@ label{
     padding: 10px;
     color: #AAA;
     height: 500px;
-    border-left: 7px solid #000;
+    border-left: 3px solid #000;
+    border-right: 3px solid #000;
     border-top: 3px solid #050505;
 }
 
@@ -72,12 +87,11 @@ label{
     background:#151515;
     padding:10px;
     color: #FFF;
-    height:450px;
     border-right: 7px solid #000;
     border-top: 3px solid #050505;
     width: 95.5%;
-    height:423px;
-    overflow: scroll;
+    height:476px;
+    overflow: auto;
 }
 
 #result{
@@ -93,17 +107,59 @@ label{
 #footer{
     background: #000;
     border:3px solid #000;
+    display:none;
 }
 
 .keywords{
-	color:#30A2F2;
+	color:#0781CC;
 }
 .implies{
-	color:yellow;
+	color:#FFFC3B;
 }
 .symbol{
 	color: #f22;
 }
+.predicate{
+	font-weight:normal;
+	color: #22FF5F;
+}
 .wff{
 	border-bottom: 1px solid #444;
+}
+
+#edges-area, #nodes-area{
+	width:auto;
+	height:100px;
+	border: 3px solid #000;
+	background: #151515;
+	color: #ccc;
+	font-size:18px;
+	overflow: auto;
+	padding:10px;
+}
+
+#nodes-area{
+	border-left:none;
+}
+
+.edge{
+	background: transparent url(../img/arrow-right-small.gif) left center no-repeat;
+	padding-left: 18px;
+	display: block;
+	margin: 1px 0 0 0;
+}
+.nodes{
+	background: transparent url(../img/arrow-right-small-2.gif) left center no-repeat;
+	padding-left: 18px;
+	display: block;
+}
+.node{
+	background:#111;
+	padding: 1px 5px;
+	margin:1px 3px 0 0;
+}
+
+#theCanvas{
+	background:#151515;
+	border: 3px solid #000;
 }

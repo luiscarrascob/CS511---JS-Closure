@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
 
-	<link rel="shortcut icon" href="http://oop.lcarrasco.com/wp-content/themes/wikiwp/images/icon.png" type="image/x-icon" />
+	<link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.2r1/build/reset/reset-min.css">
@@ -11,6 +11,8 @@
 
 	<!-- Javascript -->
 	<script type='text/javascript' src='http://ajax.microsoft.com/ajax/jquery/jquery-1.5.min.js'></script>
+	<script type='text/javascript' src='js/canvas.js'></script>
+	<script type='text/javascript' src='js/parsing.js'></script>
 	<script type='text/javascript' src='js/main.js'></script>
 	<title>Oop Project 6</title>
 </head>
@@ -22,18 +24,43 @@
     		<h1>Oop <span>Project 6</span></h1>
     </div>
     <div class="clear"></div>
+    <div id="intro">
+    		<h2>Description</h2>
+    		<p>Takes strings of the form</p>
+    		<p class="example">for all x, y, z.  "<"(x,y) and "<"(y,z) implies "<"(x,z)</p>
+    		<p>and constructs a hypergraph to validate statements</p>
+    </div>
+    <div class="clear"></div>
     <div id="body">
         <div id="body-left" class="left">
+        		<h2>Input</h2>
             <textarea id="input"></textarea>
         </div>
         <div id="body-right" class="right">
+			<h2>Formulas</h2>
             <div id="output"></div>
-            <textarea id="result"></textarea>
+            <!--<textarea id="result"></textarea>-->
         </div>
+        
         <div class="clear"></div>
+        
+		<div id="edges" class="left">
+			<h2>Edge List</h2>
+			<div id="edges-area"></div>
+		</div>
+		<div id="nodes" class="right">
+			<h2>Nodes List</h2>
+			<div id="nodes-area"></div>
+		</div>
+		
+		<div class="clear"></div>
+		
     </div>
-    <div id="footer">
-    </div>
+    <div class="clear"></div>
+    <h2>Graph</h2>
+    <canvas id="theCanvas" width="1200" height="400"></canvas>
+	<div class="clear"></div>
+    <div id="footer"></div>
 </div>
 </body>
 </html>
