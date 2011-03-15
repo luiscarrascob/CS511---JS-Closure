@@ -98,6 +98,8 @@ function processSymbols(str)
 		else if ( (str.substring(i, i+8)) == 'implies ' )
 		{
 			output += '<span class="implies">implies </span>';
+			nodes_str += "<hr/>";
+			edges_str += "<hr/>";
 			i += 7;
 		}
 		// Anything that is not matched will be put into the 
