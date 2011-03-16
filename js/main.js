@@ -10,6 +10,8 @@ var ctx;						//Canvas variable
 // MAIN
 $(document).ready(function(){
 
+	randomizeColors(); // Randomizes the list of colors (randColor.js)
+	
 	// initializes the canvas, and sets the focus to the input area
 	ctx = $('#theCanvas')[0].getContext("2d");
 	$("#input").focus();

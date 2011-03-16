@@ -11,6 +11,7 @@
 
 	<!-- Javascript -->
 	<script type='text/javascript' src='http://ajax.microsoft.com/ajax/jquery/jquery-1.5.min.js'></script>
+	<script type='text/javascript' src='js/randColor.js'></script>
 	<script type='text/javascript' src='js/canvas.js'></script>
 	<script type='text/javascript' src='js/parsing.js'></script>
 	<script type='text/javascript' src='js/main.js'></script>
@@ -27,7 +28,9 @@
     <div id="intro">
     		<h2>Description</h2>
     		<p>Takes strings of the form</p>
+    		<p class="example">for all x,y,z. "int"(x) and "int"(y) and "is the sum of _ and _"(z,x,y) implies "int"(z)</p>
     		<p class="example">for all x, y, z.  "<"(x,y) and "<"(y,z) implies "<"(x,z)</p>
+		<p class="example">for all x,y. "<"(x,y) and ">"(x,y) implies "contradiction"()</p>
     		<p>and constructs a hypergraph to validate statements</p>
     </div>
     <div class="clear"></div>

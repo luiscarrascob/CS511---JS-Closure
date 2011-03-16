@@ -8,6 +8,10 @@
 // spanned by edges[i]
 function processSymbols(str)
 {
+	resetCanvas();
+			
+	colorIndex = 0; // restart the color for the edges, this is in randColor.js
+	
 	var output = ''; // the output string with syntax highlighting
 	edges_str = '';  // the string with all the edges
 	nodes_str = '';  // the string with all the nodes
@@ -15,6 +19,8 @@ function processSymbols(str)
 	// State variables
 	var firstTime = 0;
 	var count = 0;
+
+	var impliesComing = 0;
 
 	var lptilda = 0; // last starting " character
 	var lppar = 0;   // last starting parenthesis
@@ -30,8 +36,16 @@ function processSymbols(str)
 			if ( count % 2 != 0 )
 			{
 				output += "</span>";
-				edges.push(str.substring(lptilda,i));
-				edges_str += '<span class="edge">' + str.substring(lptilda,i) + '</span><br/>';
+				var color = getRandomColor();
+				edges.push([str.substring(lptilda,i),color]);
+
+				var classImplies = '';
+				if(impliesComing)
+				{
+					classImplies = 'span-implies';
+					edges_str += '<div class="arrow-right"></div>';
+				}
+				edges_str += '<span class="edge '+classImplies+'" style="background:'+color+'">' + str.substring(lptilda,i) + '</span>';
 			}
 			else
 			{
@@ -54,26 +68,39 @@ function processSymbols(str)
 		{
 			output += "</span>)";
 
+			var color = edges[nodes.length][1];
+
 			var allnodes = str.substring(lppar,i).split(",");
 			
 			nodes.push(allnodes);
-			nodes_str += '<span class="nodes">'
+
+			var classImplies = '';
+			if(impliesComing)
+			{
+				classImplies = 'span-implies';
+				nodes_str += '<div class="arrow-right"></div>';
+			}
+			
+			nodes_str += '<span class="nodes '+classImplies+'" style="background:'+color+'">'
 			for (var nn in allnodes)
 			{
 				nodes_str += '<span class="node">' + allnodes[nn] + '</span>';
 				drawNode(allnodes[nn]);
 			}
-			nodes_str += '</span><br/>';
+			nodes_str += '</span>';
 		}
 		// Match the forall keyword and enclose it in a span
 		else if ( (str.substring(i, i+8)) == 'for all ' )
 		{
 			if ( firstTime == 0 )
 			{
-				output += '<span class="keywords">for all </span>';
+				output += '<div class="wff"><span class="keywords">for all </span>';
 				firstTime = 1;
 			}
-			else output += '<br/><br/><span class="keywords">for all </span>';
+			else output += '</div><div class="wff"><span class="keywords">for all </span>';
+			edges_str += '<div class="clear"></div>';
+			nodes_str += '<div class="clear"></div>';
+			impliesComing = 0;
 			i += 7;
 		}
 		// Match the and keyword
@@ -98,14 +125,14 @@ function processSymbols(str)
 		else if ( (str.substring(i, i+8)) == 'implies ' )
 		{
 			output += '<span class="implies">implies </span>';
-			nodes_str += "<hr/>";
-			edges_str += "<hr/>";
+			impliesComing = 1;
 			i += 7;
 		}
 		// Anything that is not matched will be put into the 
 		// output string without any changes.
 		else output += str[i];
 	}
+	output += '</div>';
 	return output;
 }
 
