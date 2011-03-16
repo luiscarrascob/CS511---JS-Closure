@@ -16,12 +16,27 @@ function Hypergraph() {
 //-------------------------------------------------------------------------------------
 
 // Is there an edge with specified label between specified nodes?
-function edgeBetween(edgeLabel, node1Label, node2Label) {
-	if (!(edgeLabel in this.edges) || !(node1Label in this.nodes) || !(node2Label in this.nodes)) {
+//
+// USAGE:  edgeBetween(<edgeLabel>, <node1Label>, <node2Label>, ... <nodeNLabel>)
+//
+// RETURNS: true iff this edge connects nodes in specified order, false otherwise
+//
+function edgeBetween(edgeLabel, nodeLabels) {
+	if (!(edgeLabel in this.edges)) { 
 		return false;
 	}
 	
-	if ((node1Label + node2Label) in this.edges[edgeLabel]) {
+	var collectedLabels = "";
+	
+	for (var i = 1; i < arguments.length; i++) {
+		if (!(arguments[i] in this.nodes)) {
+			return false;
+		}
+		
+		collectedLabels+= arguments[i];
+	}
+	
+	if (collectedLabels in this.edges[edgeLabel]) {
 		return true;	
 	}
 	
@@ -44,14 +59,19 @@ function newNode(label) {
 
 // Add a new edge between existing nodes in the graph
 //
+// USAGE: newEdge(<edgeLabel>, <arity>, <node1Label>, <node2Label>, ... <nodeNLabel>)
+//
 // THROWS: "Arity argument mismatch" iff arity does not match number of node args
 // THROWS: "Nonexistent node <nodeName>" iff specified node with name doesn't exist
-function newEdge(label, arity, node1Label, node2Label) {
+function newEdge(label, arity, nodeLabels) {
 	
 	// check argument number agreement
 	if (arity != arguments.length - 2) {
 		throw "Arity argument mismatch";
 	}
+	
+	collectedLabels = "";
+	nodes = new Array(arity);
 	
 	// check that member nodes exist
 	for (var i = 2; i < arguments.length; i++) {
@@ -60,16 +80,19 @@ function newEdge(label, arity, node1Label, node2Label) {
 		if (!(curLabel in this.nodes)) {
 			throw ("Nonexistent node " + curLabel);
 		}
+		
+		collectedLabels += curLabel;
+		nodes[i] = this.nodes[curLabel];
 	}
 	
 	// check edge is already in graph
 	if (label in this.edges) {
-		this.edges[label][(node1Label + node2Label)] = (new Edge(this, label, arity, node1Label, node2Label));
+		this.edges[label][collectedLabels] = new Edge(this, label, arity, nodes);
 	} 
 	// else create a new set with this label
 	else {
 		this.edges[label] = new Object;
-		this.edges[label][(node1Label + node2Label)] = new Edge(this, label, arity, node1Label, node2Label);
+		this.edges[label][collectedLabels] = new Edge(this, label, arity, nodes);
 	}
 	
 }
@@ -103,11 +126,9 @@ function Node(graph, label) {
 }
 
 // Member edge class
-function Edge(graph, label, arity, node1Label, node2Label) {
+function Edge(graph, label, arity, nodes) {
 	this.graph = graph;
 	this.label = label;
 	this.arity = arity;
-	this.nodes = new Array(arity);
-	this.nodes[0] = graph.nodes[node1Label];
-	this.nodes[1] = graph.nodes[node2Label];
+	this.nodes = nodes;
 }
