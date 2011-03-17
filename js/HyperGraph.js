@@ -76,7 +76,7 @@ function newEdge(label, arity, nodeLabels) {
 	// check that member nodes exist
 	for (var i = 2; i < arguments.length; i++) {
 		var curLabel = arguments[i];
-		
+	
 		if (!(curLabel in this.nodes)) {
 			throw ("Nonexistent node " + curLabel);
 		}

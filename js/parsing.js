@@ -21,6 +21,7 @@ function processSymbols(str)
 	var count = 0;
 
 	var impliesComing = 0;
+	var nodesComing = 0;
 
 	var lptilda = 0; // last starting " character
 	var lppar = 0;   // last starting parenthesis
@@ -37,7 +38,6 @@ function processSymbols(str)
 			{
 				output += "</span>";
 				var color = getRandomColor();
-				edges.push([str.substring(lptilda,i),color]);
 
 				var classImplies = '';
 				if(impliesComing)
@@ -45,7 +45,7 @@ function processSymbols(str)
 					classImplies = 'span-implies';
 					edges_str += '<div class="arrow-right"></div>';
 				}
-				edges_str += '<span class="edge '+classImplies+'" style="background:'+color+'">' + str.substring(lptilda,i) + '</span>';
+				edges_str += '<span class="edge '+classImplies+'"><a>' + str.substring(lptilda,i) + "</a>";
 			}
 			else
 			{
@@ -68,26 +68,25 @@ function processSymbols(str)
 		{
 			output += "</span>)";
 
-			var color = edges[nodes.length][1];
+			var color = getRandomColor();
 
 			var allnodes = str.substring(lppar,i).split(",");
-			
-			nodes.push(allnodes);
 
 			var classImplies = '';
 			if(impliesComing)
 			{
 				classImplies = 'span-implies';
-				nodes_str += '<div class="arrow-right"></div>';
 			}
 			
-			nodes_str += '<span class="nodes '+classImplies+'" style="background:'+color+'">'
+			edges_str += '<span class="nodes">'
 			for (var nn in allnodes)
 			{
-				nodes_str += '<span class="node">' + allnodes[nn] + '</span>';
-				drawNode(allnodes[nn]);
+				if(allnodes[nn] == "" || allnodes[nn] == " ") continue;
+				edges_str += '<span class="node">' + allnodes[nn] + '</span>';
+				//drawNode(allnodes[nn]);
 			}
-			nodes_str += '</span>';
+
+			edges_str += '</span></span>';
 		}
 		// Match the forall keyword and enclose it in a span
 		else if ( (str.substring(i, i+8)) == 'for all ' )
@@ -95,18 +94,30 @@ function processSymbols(str)
 			if ( firstTime == 0 )
 			{
 				output += '<div class="wff"><span class="keywords">for all </span>';
+				edges_str += '<div class="wff-a">';
 				firstTime = 1;
 			}
 			else output += '</div><div class="wff"><span class="keywords">for all </span>';
-			edges_str += '<div class="clear"></div>';
-			nodes_str += '<div class="clear"></div>';
+			edges_str += '<div class="clear"></div></div><div class="wff-a">';
+
 			impliesComing = 0;
 			i += 7;
+			nodesComing = i+1;
+		}
+		else if( str[i] == "." )
+		{
+			var nn = str.substring(nodesComing, i);
+			var ex = nn.split(",");
+			for (ii in ex)
+			{
+				nodes_str += "<span class='a-node'>" + ex[ii] + "</span><div class='clear'></div>";
+			}
 		}
 		// Match the and keyword
 		else if ( (str.substring(i, i+4)) == 'and ' )
 		{
 			output += '<span class="keywords">and </span>';
+			edges_str += '<span class="and">a</span>';
 			i += 3;
 		}
 		// Match the or keyword
@@ -133,6 +144,7 @@ function processSymbols(str)
 		else output += str[i];
 	}
 	output += '</div>';
+	edges_str += '</div>';
 	return output;
 }
 
@@ -140,7 +152,9 @@ function processSymbols(str)
 // inside the input area. It takes the output from the processed
 // input string and writes to the right divs.
 function update()
-{
+{	
+	var graph = new Hypergraph(); // create new graph
+	
 	var thestring = $("#input").val();
 
 	thestring = processSymbols(thestring);
@@ -148,4 +162,69 @@ function update()
 	$("div.#output").html(thestring);
 	$("div.#edges-area").html(edges_str);
 	$("div.#nodes-area").html(nodes_str);
+
+	$(".a-node").each(function(){
+		console.log("Adding node: " + $(this).text());
+		graph.newNode($(this).text());
+	});
+
+	$(".wff-a").each(function(index){
+		if ( index > 0 )
+		{
+			$(this).children().filter(".edge").not(".span-implies").each(function(){
+				var command = "graph.newEdge(";
+				$(this).children().each(function(index){
+					if ( index == 0 ) // title
+					{
+						command += "'" + $(this).text() + "', ";
+					}
+					else // nodes
+					{
+						var count = 0;
+						var tmp_str = "";
+						$(this).children().filter(".node").each(function(){
+							tmp_str += ", '" + $(this).text() + "'";
+							count ++;
+						});
+						command += count + tmp_str;
+					}
+				});
+				command += ");";
+				console.log(command);
+				eval(command);
+			});
+		}
+	});
+	
+	$(".span-implies").each(function(){
+		var command = "graph.edgeBetween(";
+		$(this).children().each(function(index){
+			if ( index == 0 ) // title
+			{
+				command += "'" + $(this).text() + "'";
+			}
+			else // nodes
+			{
+				var tmp_str = "";
+				$(this).children().filter(".node").each(function(){
+					tmp_str += ", '" + $(this).text() + "'";
+				});
+				command += tmp_str;
+			}
+		});
+		command += ");";
+		console.log(command);
+		
+		var retval = eval(command);
+
+		if ( retval == true )
+		{
+			$(this).addClass("true");
+		}
+		else
+		{
+			$(this).addClass("false");
+		}
+		
+	});
 }

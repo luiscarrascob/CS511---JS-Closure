@@ -115,7 +115,7 @@ label{
 }
 
 .keywords{
-	color:#0781CC;
+	color:#22FF5F;
 }
 .implies{
 	color:#FFFC3B;
@@ -125,7 +125,7 @@ label{
 }
 .predicate{
 	font-weight:normal;
-	color: #22FF5F;
+	color: #0781CC;
 }
 
 .wff:nth-child(odd) {
@@ -135,6 +135,9 @@ label{
 .wff{
 	padding: 12px 7px;
 }
+
+#edges{width:90%;}
+#nodes{width:9.5%;}
 
 #edges-area, #nodes-area{
 	width:auto;
@@ -152,7 +155,7 @@ label{
 	border-left:none;
 }
 
-.edge, .nodes{
+.edge, .nodes, .and{
 	padding: 5px 7px;
 	margin: 10px;
 	display: block;
@@ -161,9 +164,22 @@ label{
 	border:3px solid #000;
 }
 
+.edge{
+	background-color:#f22;
+	height: 59px;
+}
+.nodes{
+	background-color:#0781CC;
+	height:23px;
+}
+.and{
+	margin-top:29px;
+	background-color:#22FF5F;
+}
+
 .arrow-right{
 	width:15px;
-	height:30px;
+	height:67px;
 	padding: 5px 7px;
 	margin: 10px;
 	float:left;
@@ -176,12 +192,34 @@ label{
 }
 
 .span-implies{
-	background: #111 !important;
-	border-color:#111 !important;
-	color: #FFFC3B !important;
+	text-shadow: 2px 2px 7px #111;
+	color: #222 !important;
 	-moz-box-shadow: 0 0 4px 1px #FFFC3B;
 	-webkit-box-shadow: 0 0 4px 1px #FFFC3B;
 	box-shadow: 0 0 4px 1px #FFFC3B;
+}
+
+.span-implies.true{
+	background: #FFFC3B url(../img/check.gif) right bottom no-repeat;
+	-moz-box-shadow: 0 0 4px 1px green;
+	-webkit-box-shadow: 0 0 4px 1px green;
+	box-shadow: 0 0 4px 1px green;
+}
+
+.span-implies.false{
+	background: #FFFC3B url(../img/false.png) right bottom no-repeat;
+	-moz-box-shadow: 0 0 4px 1px red;
+	-webkit-box-shadow: 0 0 4px 1px red;
+	box-shadow: 0 0 4px 1px red;
+}
+
+.a-node{
+	background-color:#0781CC;
+	padding:10px;
+	color: white;
+	display:block;
+	margin:5px;
+	text-align:center;
 }
 
 #theCanvas{

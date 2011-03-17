@@ -1,8 +1,6 @@
 // GLOBAL VARIABLES
-var edges = new Array(); 	// Keeps array of edges where edges[i] matches nodes[i]
 var edges_str = '';			// Output string for edges div
 
-var nodes = new Array();		//2D array with nodes[i] contains all nodes for edges[i]
 var nodes_str = '';			//Output string for nodes div 
 
 var ctx;						//Canvas variable
