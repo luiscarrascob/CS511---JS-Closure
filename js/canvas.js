@@ -80,7 +80,7 @@ function drawGraph ( json, fd ){
 
 	if ( fd != null )
 	{
-		fd.graph.empty();
+		fd.graph.empty();x
 		fd.loadJSON(json);
 		fd.computeIncremental({
 			iter: 40,
