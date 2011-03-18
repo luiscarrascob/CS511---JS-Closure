@@ -8,16 +8,30 @@ var ctx;						//Canvas variable
 // MAIN
 $(document).ready(function(){
 
-	randomizeColors(); // Randomizes the list of colors (randColor.js)
+	var firstTime = true;
+	var firstTimeButton = true;
 	
 	// initializes the canvas, and sets the focus to the input area
-	ctx = $('#theCanvas')[0].getContext("2d");
 	$("#input").focus();
 
 	// Every Keystroke call update, this is on parsing.js
-	update();
+	//update();
 	$("#input").keyup(function(){
 		update();
+		if ( firstTime )
+		{
+			$.scrollTo( $(this).prev("h2"), 800);
+			firstTime = false;
+		}
+	});
+
+	$("#submit-button").click(function () { 
+		makeGraph();
+		if ( firstTimeButton )
+		{
+			$.scrollTo( $("#infovis").prev("h2"), 800);
+			firstTimeButton = false;
+		}
 	});
 });
 

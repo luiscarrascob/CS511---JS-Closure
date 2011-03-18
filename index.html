@@ -11,6 +11,8 @@
 
 	<!-- Javascript -->
 	<script type='text/javascript' src='http://ajax.microsoft.com/ajax/jquery/jquery-1.5.min.js'></script>
+	<script type='text/javascript' src='js/drawing.js'></script>
+	<script type='text/javascript' src='js/scroll.js'></script>
 	<script type='text/javascript' src='js/HyperGraph.js'></script>
 	<script type='text/javascript' src='js/randColor.js'></script>
 	<script type='text/javascript' src='js/canvas.js'></script>
@@ -34,6 +36,7 @@
 		<p class="example">for all x,y. "<"(x,y) and ">"(x,y) implies "contradiction"()</p>
     		<p>and constructs a hypergraph to validate statements</p>
     </div>
+    <div id="log"></div>
     <div class="clear"></div>
     <div id="body">
         <div id="body-left" class="left">
@@ -47,22 +50,24 @@
         </div>
         
         <div class="clear"></div>
-        
-		<div id="edges" class="left">
-			<h2>Edge List</h2>
-			<div id="edges-area"></div>
-		</div>
-		<div id="nodes" class="right">
+
+        	<div id="nodes" class="left">
 			<h2>Nodes List</h2>
 			<div id="nodes-area"></div>
+		</div>
+		<div id="edges" class="right">
+			<h2>Edge List</h2>
+			<div id="edges-area"></div>
 		</div>
 		
 		<div class="clear"></div>
 		
     </div>
     <div class="clear"></div>
+    <div id="submit-button">Make graph</div>
+    <div class="clear"></div>
     <h2>Graph</h2>
-    <canvas id="theCanvas" width="1200" height="400"></canvas>
+    <div id="infovis"></div>
 	<div class="clear"></div>
     <div id="footer"></div>
 </div>

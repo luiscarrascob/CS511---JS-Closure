@@ -1,7 +1,35 @@
+#infovis{
+	position: relative;
+	width: 98%;
+	height: 350px;
+	margin: auto;
+	overflow: hidden;
+	border: 3px solid black;
+}
+
 .clear{clear:both;}
+
 body{
     background: #111;
     height: 100%;
+    font-size:12px;
+}
+
+.tip-title{
+	color: #fff;
+}
+
+#submit-button{
+	width:99%;
+	padding: 5px 0;
+	background: #ccc;
+	text-align: center;
+	color: #333;
+	font-weight:bold;
+	font-size: 20px;
+	margin-top:20px;
+	cursor: pointer;
+	border:3px solid #000;
 }
 
 h2{
@@ -18,6 +46,7 @@ p{
 	color:#555;
 	margin: 0 10px;
 }
+
 p.example{
 	color:#FFFC3B;
 	display:block;
@@ -81,20 +110,19 @@ label{
     background: #252525;
     padding: 10px;
     color: #AAA;
-    height: 500px;
-    border-left: 3px solid #000;
-    border-right: 3px solid #000;
-    border-top: 3px solid #050505;
+    height: 150px;
+    border: 3px solid #000;
 }
 
 #output{
     background:#151515;
     padding:10px;
     color: #FFF;
-    border-right: 7px solid #000;
-    border-top: 3px solid #050505;
+    border-right: 3px solid #000;
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
     width: 95.5%;
-    height:476px;
+    height:124px;
     overflow: auto;
 }
 
@@ -141,7 +169,7 @@ label{
 
 #edges-area, #nodes-area{
 	width:auto;
-	height:200px;
+	height:150px;
 	border: 3px solid #000;
 	background: #151515;
 	color: #222;
@@ -151,12 +179,12 @@ label{
 	padding:10px;
 }
 
-#nodes-area{
+#edges-area{
 	border-left:none;
 }
 
 .edge, .nodes, .and{
-	padding: 5px 7px;
+	padding: 2px 4px;
 	margin: 10px;
 	display: block;
 	float:left;

@@ -148,26 +148,25 @@ function processSymbols(str)
 	return output;
 }
 
-// This function is called every time that a key in pressed
-// inside the input area. It takes the output from the processed
-// input string and writes to the right divs.
-function update()
-{	
+var fd = null; // the graph drawing
+
+function makeGraph() { 
 	var graph = new Hypergraph(); // create new graph
+	var foo = [];
+	var x = {};
 	
-	var thestring = $("#input").val();
-
-	thestring = processSymbols(thestring);
-	
-	$("div.#output").html(thestring);
-	$("div.#edges-area").html(edges_str);
-	$("div.#nodes-area").html(nodes_str);
-
-	$(".a-node").each(function(){
+	$(".a-node").each(function(index){
 		console.log("Adding node: " + $(this).text());
 		graph.newNode($(this).text());
+		x = {
+			"adjacencies": [],
+			"id": $(this).text(),
+			"name": $(this).text()
+		};
+		console.log(x);
+		foo.push(x);
 	});
-
+	
 	$(".wff-a").each(function(index){
 		if ( index > 0 )
 		{
@@ -183,6 +182,14 @@ function update()
 						var count = 0;
 						var tmp_str = "";
 						$(this).children().filter(".node").each(function(){
+							var tempSel = $(this);
+							$.each(foo, function(){
+								if(this["name"] == tempSel.text())
+								{
+									if ( tempSel.next(".node").text() != "" )
+										this["adjacencies"].push(tempSel.next(".node").text());
+								}
+							});
 							tmp_str += ", '" + $(this).text() + "'";
 							count ++;
 						});
@@ -194,7 +201,10 @@ function update()
 				eval(command);
 			});
 		}
+		
 	});
+
+	fd = drawGraph(foo, fd);
 	
 	$(".span-implies").each(function(){
 		var command = "graph.edgeBetween(";
@@ -225,6 +235,19 @@ function update()
 		{
 			$(this).addClass("false");
 		}
-		
 	});
+};
+
+// This function is called every time that a key in pressed
+// inside the input area. It takes the output from the processed
+// input string and writes to the right divs.
+function update()
+{	
+	var thestring = $("#input").val();
+
+	thestring = processSymbols(thestring);
+	
+	$("div.#output").html(thestring);
+	$("div.#edges-area").html(edges_str);
+	$("div.#nodes-area").html(nodes_str);
 }
