@@ -40,12 +40,14 @@ function processSymbols(str)
 				var color = getRandomColor();
 
 				var classImplies = '';
+				classImplies = '"' + 'style="background-color:' + getRandomColor() + ';" ';
+				
 				if(impliesComing)
 				{
-					classImplies = 'span-implies';
+					classImplies = 'span-implies "';
 					edges_str += '<div class="arrow-right"></div>';
 				}
-				edges_str += '<span class="edge '+classImplies+'"><a>' + str.substring(lptilda,i) + "</a>";
+				edges_str += '<span class="edge '+classImplies + '><a>' + str.substring(lptilda,i) + "</a>";
 			}
 			else
 			{
@@ -187,7 +189,18 @@ function makeGraph() {
 								if(this["name"] == tempSel.text())
 								{
 									if ( tempSel.next(".node").text() != "" )
-										this["adjacencies"].push(tempSel.next(".node").text());
+									{
+										//this["adjacencies"].push(tempSel.next(".node").text());
+										this["adjacencies"].push(/*tempSel.next(".node").text(),*/
+																{
+																	"nodeTo": tempSel.next(".node").text(),
+																	"nodeFrom": tempSel.text(),
+																	"data": {
+																		"$color": tempSel.parent().parent().css("background-color")
+																			}
+																}
+																);
+									}
 								}
 							});
 							tmp_str += ", '" + $(this).text() + "'";
@@ -205,6 +218,8 @@ function makeGraph() {
 	});
 
 	fd = drawGraph(foo, fd);
+	console.log('Foo:');
+	console.log(foo);
 	
 	$(".span-implies").each(function(){
 		var command = "graph.edgeBetween(";

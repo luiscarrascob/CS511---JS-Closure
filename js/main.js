@@ -10,6 +10,8 @@ $(document).ready(function(){
 
 	var firstTime = true;
 	var firstTimeButton = true;
+
+	randomizeColors();
 	
 	// initializes the canvas, and sets the focus to the input area
 	$("#input").focus();

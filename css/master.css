@@ -18,6 +18,9 @@ body{
 .tip-title{
 	color: #fff;
 }
+.tip-text{
+	color: #ccc;
+}
 
 #submit-button{
 	width:99%;
@@ -220,7 +223,7 @@ label{
 }
 
 .span-implies{
-	text-shadow: 2px 2px 7px #111;
+	background-color: #FFFC3B;
 	color: #222 !important;
 	-moz-box-shadow: 0 0 4px 1px #FFFC3B;
 	-webkit-box-shadow: 0 0 4px 1px #FFFC3B;

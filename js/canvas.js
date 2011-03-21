@@ -80,7 +80,7 @@ function drawGraph ( json, fd ){
 
 	if ( fd != null )
 	{
-		fd.graph.empty();x
+		fd.graph.empty();
 		fd.loadJSON(json);
 		fd.computeIncremental({
 			iter: 40,
@@ -109,7 +109,7 @@ function drawGraph ( json, fd ){
       //Enable panning events only if we're dragging the empty
       //canvas (and not a node).
       panning: 'avoid nodes',
-      zooming: false
+      zooming: true
     },
     // Change node and edge styles such as
     // color and width.
@@ -121,7 +121,7 @@ function drawGraph ( json, fd ){
       	type: 'circle',  
 		color: '#0781CC',  
 		alpha: 1,  
-		dim: 10,  
+		dim: 15,  
 		height: 50,  
 		width: 50,  
 		autoHeight: false,  
@@ -133,12 +133,12 @@ function drawGraph ( json, fd ){
 		span:1
     },
     Edge: {
-		overridable: false,  
-		type: 'line',  
+		overridable: true,  
+		type: 'arrow',  
 		color: '#f22',  
-		lineWidth: 50,  
-		dim:15,  
-		alpha: 1,
+		lineWidth: 40,  
+		dim:40,  
+		alpha: 0.5,
     },
     //Native canvas text styling
     Label: {
