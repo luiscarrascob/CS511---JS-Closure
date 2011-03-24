@@ -140,15 +140,15 @@ function processSymbols(str)
 				beginVar = -1;
 				output += "</span></div>";
 			}
-			/*else
+			else
 			{
 				var nn = str.substring(nodesComing, i);
 				var ex = nn.split(",");
 				for (ii in ex)
 				{
-					nodes_str += "<span class='a-node'>" + ex[ii] + "</span><div class='clear'></div>";
+					nodes_str += "<span class='a-node var'>" + ex[ii] + "</span><div class='clear'></div>";
 				}
-			}*/
+			}
 		}
 		// Match the and keyword
 		else if ( (str.substring(i, i+4)) == 'and ' )
@@ -193,7 +193,7 @@ function makeGraph() {
 	var assertions = [];
 	var x = {};
 	
-	$(".a-node").each(function(index){
+	$(".a-node").not(".var").each(function(index){
 		console.log("Adding node: " + $(this).text());
 		graph.newNode($(this).text());
 		x = {
@@ -201,7 +201,6 @@ function makeGraph() {
 			"id": $(this).text(),
 			"name": $(this).text()
 		};
-		console.log(x);
 		graphjson.push(x);
 	});
 	
@@ -226,8 +225,7 @@ function makeGraph() {
 								{
 									if ( tempSel.next(".node").text() != "" )
 									{
-										//this["adjacencies"].push(tempSel.next(".node").text());
-										this["adjacencies"].push(/*tempSel.next(".node").text(),*/
+										this["adjacencies"].push(
 																{
 																	"nodeTo": tempSel.next(".node").text(),
 																	"nodeFrom": tempSel.text(),
@@ -281,25 +279,14 @@ function makeGraph() {
 			});
 	});
 	
-	/*$(".span-implies").each(function(){
-		$(this).children().each(function(index){
-			if ( index == 0 ) // title
-			{
-				assertions.push({
-							"edge-name":$(this).text(),
-							"type":"implies",
-							"adjacencies": []
+	$(".a-node.var").each(function(index){
+		console.log($(this).text());
+		assertions.push({
+							"node-name":$(this).text(),
+							"type":"node"
 						});
-			}
-			else // nodes
-			{
-				$(this).children().filter(".node").each(function(){
-					//console.log(assertions[ii]);
-					assertions[index]["adjacencies"].push($(this).text());
-				});
-			}
-		});
-	});*/
+	});
+	
 	console.log('assertions:');
 	console.log(assertions);
 };

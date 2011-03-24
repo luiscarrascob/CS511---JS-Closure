@@ -310,6 +310,10 @@ label{
 	box-shadow: 0 0 4px 1px red;
 }
 
+.a-node.var{
+	display:none;
+}
+
 .a-node{
 	background-color:#80b6e5;
 	padding:10px;
