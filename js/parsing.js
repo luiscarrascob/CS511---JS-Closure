@@ -44,7 +44,7 @@ function processSymbols(str)
 				var classImplies = '';
 				if(impliesComing)
 				{
-					classImplies = 'span-implies "';
+					classImplies = 'span-implies';
 					edges_str += '<div class="arrow-right"></div>';
 				}
 				edges_str += '<span class="edge '+classImplies+'"><a>' + str.substring(lptilda,i) + "</a>";
@@ -257,14 +257,16 @@ function makeGraph() {
 	console.log(graphjson);
 
 	$(".wff-a.assert").each(function(index){
-			$(this).children().filter(".edge").not(".span-implies").each(function(ii){
+			$(this).children().filter(".edge").each(function(ii){
 				$(this).children().each(function(index){
 					var currNode = $(this);
 					if ( index == 0 ) // title
 					{
+						var type = "assert";
+						if ( $(this).parent().hasClass("span-implies") ) type = "implies";
 						assertions.push({
 							"edge-name":$(this).text(),
-							"type":"assert",
+							"type":type,
 							"adjacencies": []
 						});
 					}
@@ -279,7 +281,7 @@ function makeGraph() {
 			});
 	});
 	
-	$(".span-implies").each(function(){
+	/*$(".span-implies").each(function(){
 		$(this).children().each(function(index){
 			if ( index == 0 ) // title
 			{
@@ -297,7 +299,7 @@ function makeGraph() {
 				});
 			}
 		});
-	});
+	});*/
 	console.log('assertions:');
 	console.log(assertions);
 };
