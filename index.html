@@ -30,8 +30,11 @@
     <div class="clear"></div>
     <div id="intro">
     		<h2>Description</h2>
-    		<p>Takes strings of the form</p>
-    		<p class="example">for all a,b,c. "int"(a) and "int"(b) and "is the sum of _ & _"(a,b,c) implies "int"(c)</p>
+    		<p>First introduce the variables using:</p>
+    		<p class="example">intro x,y,z.</p>
+    		<p>Then make the assumptions using:</p>
+    		<p class="example">assume "P"(x,y) "P"(y,z) "Q"(z,x)</p>
+    		<p>Finally make the assertions using:</p>
     		<p class="example">for all x,y,z.  "<"(x,y) and "<"(y,z) implies "<"(x,z)</p>
 		<p class="example">for all i,j. "<"(i,j) and ">"(i,j) implies "contradiction"()</p>
     		<p>and constructs a hypergraph to validate statements</p>
@@ -52,11 +55,11 @@
         <div class="clear"></div>
 
         	<div id="nodes" class="left">
-			<h2>Nodes List</h2>
+			<h2>Vars </h2>
 			<div id="nodes-area"></div>
 		</div>
 		<div id="edges" class="right">
-			<h2>Edge List</h2>
+			<h2>Formulas</h2>
 			<div id="edges-area"></div>
 		</div>
 		
@@ -64,7 +67,11 @@
 		
     </div>
     <div class="clear"></div>
-    <div id="submit-button">Make graph</div>
+    <div id="buttons">
+    		<div id="submit-button">Make graph</div>
+		<div id="transit-button">Transit</div>
+		<div class="clear"></div>
+    </div>
     <div class="clear"></div>
     <h2>Graph</h2>
     <div id="infovis"></div>

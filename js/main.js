@@ -35,5 +35,9 @@ $(document).ready(function(){
 			firstTimeButton = false;
 		}
 	});
+
+	$("#transit-button").click(function () {
+		alert("Transit not yet implemented");
+	});
 });
 
