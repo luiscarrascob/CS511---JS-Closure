@@ -51,6 +51,7 @@ var colorArr = ["#FF7575",
 ];
 
 var colorIndex = 0; // Keeps track of where in the array we are
+var colorsUsed = [];
 
 // Randomizes the array of colors
 function randomizeColors()
@@ -65,8 +66,26 @@ function randomizeColors()
 	}
 }
 
-// Returns a color from randomized list in order
-function getRandomColor()
+// Returns a color from randomized list in order. It also keeps track
+// of what predicate symbols have requested a color and returns the 
+// same color if a predicate with the same name requests a color again.
+function getRandomColor(node)
 {
-	return colorArr[(colorIndex++)%colorArr.length];
+	if (node in colorsUsed) return colorsUsed[node];
+	else
+	{
+		var color = colorArr[(colorIndex++)%colorArr.length];
+		colorsUsed[node] = color;
+		return color;
+	}
 }
+
+
+
+
+
+
+
+
+
+

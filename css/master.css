@@ -258,7 +258,7 @@ label{
 }
 
 .assert .edge{
-	background: #faa url(../img/assert.png) no-repeat bottom right;
+	background: #fbb url(../img/assert.png) no-repeat bottom right;
 	height: 59px;
 	-moz-box-shadow: 0 0 4px 1px #f22;
 	-webkit-box-shadow: 0 0 4px 1px #f22;

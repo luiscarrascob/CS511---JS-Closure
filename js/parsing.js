@@ -28,6 +28,8 @@ function processSymbols(str)
 
 	var beginVar = -1;
 	var asserting = 0;
+
+	var lastPredicate = '';
 	
 	for ( var i = 0; i < str.length; i++ )
 	{
@@ -47,7 +49,10 @@ function processSymbols(str)
 					classImplies = 'span-implies';
 					edges_str += '<div class="arrow-right"></div>';
 				}
-				edges_str += '<span class="edge '+classImplies+'"><a>' + str.substring(lptilda,i) + "</a>";
+				var pred = str.substring(lptilda,i);
+				edges_str += '<span class="edge '+classImplies+'"><a>' + pred + "</a>";
+				lastPredicate = pred; // Save the last predicate symbol so we can assign
+				// the same color to the same symbol later
 			}
 			else
 			{
@@ -70,28 +75,32 @@ function processSymbols(str)
 		{
 			output += "</span>)";
 
-			var color = getRandomColor();
-//			if (asserting) var color = getRandomColor();
-//			else var color = '';
+			// Use the last predicate to add the same color to the same predicate
+			// symbols
+			var color = getRandomColor(lastPredicate);
 
-			var allnodes = str.substring(lppar,i).split(",");
+			// Try taking out the extra space characters. Not working correctly
+			var allnodes = str.substring(lppar,i).replace(" ","").split(",");
 			
 			edges_str += '<span class="nodes" style="background-color:'+color+';">'
 			for (var nn in allnodes)
 			{
 				if(allnodes[nn] == "" || allnodes[nn] == " ") continue;
-				edges_str += '<span class="node">' + allnodes[nn] + '</span>';
-				//drawNode(allnodes[nn]);
+				var temp = allnodes[nn].replace(" ","");
+				edges_str += '<span class="node">' + temp + '</span>';
 			}
 
 			edges_str += '</span></span>';
 		}
+		// Take care of the introduction of variables. This should happen at the beggining
+		// of the input.
 		else if( ( str.substr(i, i+6) ) == 'intro ' )
 		{
 			output += '<div class="wff"><span class="keywords">intro </span><span class="var">';
 			i += 5;
 			beginVar = i+1;
 		}
+		// Take care of assumptions. They should come between introducions and assertions
 		else if ( (str.substring(i, i+7)) == 'assume ' )
 		{
 			if ( firstTime == 0 )
@@ -109,7 +118,7 @@ function processSymbols(str)
 			beginVar = -1;
 			asserting = 1;
 		}
-		// Match the forall keyword and enclose it in a span
+		// Match the forall keyword and enclose it in a span. These are the assertions
 		else if ( (str.substring(i, i+8)) == 'for all ' )
 		{
 			if ( firstTime == 0 )
@@ -127,15 +136,18 @@ function processSymbols(str)
 			beginVar = -1;
 			asserting = 0;
 		}
+		// This is the end delimiter for variables. if we are in an intro statement, then it's the end
+		// of a line. Otherwise we are in an assertion statement
 		else if( str[i] == "." )
 		{
 			if (beginVar != -1)
 			{
-				var nn = str.substring(beginVar, i);
+				var nn = str.substring(beginVar, i).replace(" ","");
 				var ex = nn.split(",");
 				for (ii in ex)
 				{
-					nodes_str += "<span class='a-node'>" + ex[ii] + "</span><div class='clear'></div>";
+					var temp = ex[ii].replace(" ","");
+					nodes_str += "<span class='a-node'>" + temp + "</span><div class='clear'></div>";
 				}
 				beginVar = -1;
 				output += "</span></div>";
@@ -187,25 +199,31 @@ function processSymbols(str)
 
 var fd = null; // the graph drawing
 
+// This is called when the graph button is pressed. It traverses the parsed out input and creates
+// a graph. Then it draws it.
 function makeGraph() { 
 	var graph = new Hypergraph(); // create new graph
-	var graphjson = [];
-	var assertions = [];
-	var x = {};
-	
+	var graphjson = []; // This is the json array that keeps the representation of the graph 
+	// that we can pass to the graphing library.
+
+	var assertions = []; // This is the json array that will be passed into the Hypergraph() to 
+	// perform the transit operation.
+
+	// Traverse the introduced nodes and add them to the graph
 	$(".a-node").not(".var").each(function(index){
 		console.log("Adding node: " + $(this).text());
 		graph.newNode($(this).text());
-		x = {
+		graphjson.push({
 			"adjacencies": [],
 			"id": $(this).text(),
 			"name": $(this).text()
-		};
-		graphjson.push(x);
+		});
 	});
-	
+
+	// Traverse all the assumptions. Add all these edges to the graph. Also add the edges to 
+	// the graphjson structure in order to draw them later
 	$(".wff-a.assume").each(function(index){
-		if ( index > 0 )
+		if ( index > 0 ) // little hack because we have an extra div floating around
 		{
 			$(this).children().filter(".edge").not(".span-implies").each(function(){
 				var command = "graph.newEdge(";
@@ -249,11 +267,13 @@ function makeGraph() {
 			});
 		}
 	});
-	
+
+	// Draw the graph and log stuff.
 	fd = drawGraph(graphjson, fd);
 	console.log('graphjson:');
 	console.log(graphjson);
 
+	// Add the assertions to the assertions json array
 	$(".wff-a.assert").each(function(index){
 			$(this).children().filter(".edge").each(function(ii){
 				$(this).children().each(function(index){
@@ -278,7 +298,9 @@ function makeGraph() {
 				});
 			});
 	});
-	
+
+	// Add the variables to the assertions json array. This will make thigs easier in the 
+	// Hypergraph()'s transit and closure operation
 	$(".a-node.var").each(function(index){
 		console.log($(this).text());
 		assertions.push({
