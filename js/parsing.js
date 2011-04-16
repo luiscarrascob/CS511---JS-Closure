@@ -273,9 +273,12 @@ function makeGraph() {
 	console.log('graphjson:');
 	console.log(graphjson);
 
+	var count = 0;
 	// Add the assertions to the assertions json array
 	$(".wff-a.assert").each(function(index){
-			$(this).children().filter(".edge").each(function(ii){
+			$(this).children().filter(".edge").each(function(ii)
+			{
+				var currEdge = $(this);
 				$(this).children().each(function(index){
 					var currNode = $(this);
 					if ( index == 0 ) // title
@@ -287,17 +290,16 @@ function makeGraph() {
 							"type":type,
 							"adjacencies": []
 						});
-					}
-					else // nodes
-					{
-						$(this).children().filter(".node").each(function(){
+						$(this).siblings().filter(".nodes").children().filter(".node").each(function(){
 							//console.log(assertions[ii]);
-							assertions[ii]["adjacencies"].push($(this).text());
+							assertions[count]["adjacencies"].push($(this).text());
 						});
+						count ++;
 					}
 				});
 			});
 	});
+	
 
 	// Add the variables to the assertions json array. This will make thigs easier in the 
 	// Hypergraph()'s transit and closure operation
