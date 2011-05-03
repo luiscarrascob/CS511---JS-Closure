@@ -65,7 +65,6 @@ function transit(graph, assertions) {
 			}
 		}
 		
-		
 		console.log('Num edges added on this iteration ' + numEdgesAdded);
 	}
    
