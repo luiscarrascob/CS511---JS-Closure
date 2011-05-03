@@ -11,6 +11,8 @@ $(document).ready(function(){
 	var firstTime = true;
 	var firstTimeButton = true;
 
+	var graph;
+	var assertions = [];
 	randomizeColors();
 	
 	// initializes the canvas, and sets the focus to the input area
@@ -28,7 +30,15 @@ $(document).ready(function(){
 	});
 
 	$("#submit-button").click(function () { 
-		makeGraph();
+		var ret = makeGraph();
+
+		graph = ret[0];
+		assertions = ret[1];
+
+		console.log("Graph and assertions in main");
+		console.log(graph);
+		console.log(assertions);
+		
 		if ( firstTimeButton )
 		{
 			$.scrollTo( $("#infovis").prev("h2"), 800);
@@ -37,7 +47,10 @@ $(document).ready(function(){
 	});
 
 	$("#transit-button").click(function () {
-		alert("Transit not yet implemented");
+		graph = transit(graph, assertions);
+		console.log("Graph after edges drawn:");
+		console.log(graph);
+		drawTheGraph(graph);
 	});
 });
 
