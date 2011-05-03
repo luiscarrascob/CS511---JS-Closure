@@ -68,12 +68,29 @@ function transit(graph, assertions) {
 				console.log(variableMappings);
 					
 						
-				var mapVariablesAndEval = "";
 				
-				//for (var j)
-				
+								
 				
 				// create all possible mappings of variables to nodes in the graph
+				
+				var mapVariablesAndEval = "";
+				
+				for (var varNum = 0; varNum < variableNameArray.length; varNum++) {
+					mapVariablesAndEval += 'for (n'+varNum+' in nodeList) {';
+					mapVariablesAndEval += 'var var'+varNum+' = variableNameArray['+varNum+'];';
+					mapVariablesAndEval += 'variableMappings[var'+varNum+'].value = nodeList[n'+varNum+'].label;';
+				}
+				mapVariablesAndEval += 'numEdgesAdded += drawPossibleEdges(graph, variableMappings, thisStatement);';
+				for (var varNum = 0; varNum < variableNameArray.length; varNum++) {
+					mapVariablesAndEval += '}';
+				}
+				
+				eval(mapVariablesAndEval);
+				/*
+				
+				
+				
+				
 				for (var n0 in nodeList) {
 					var var0 = variableNameArray[0];
 					variableMappings[var0].value = nodeList[n0].label;
@@ -92,6 +109,11 @@ function transit(graph, assertions) {
 						}
 					}
 				}
+				
+				
+				
+				
+				*/
 			}
 			
 			
