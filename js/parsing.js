@@ -313,6 +313,14 @@ function makeGraph() {
 	
 	console.log('assertions:');
 	console.log(assertions);
+    
+    //////////////////////////////////////////////////////////////
+    // ADDITIONS
+    
+    transit(graph, assertions);
+    
+    //////////////////////////////////////////////////////////////
+    
 };
 
 // This function is called every time that a key in pressed

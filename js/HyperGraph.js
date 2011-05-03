@@ -7,8 +7,10 @@ function Hypergraph() {
 	
 	this.newNode = newNode;
 	this.newEdge = newEdge;
+	this._newEdge = _newEdge;
 	this.toString = toString;
 	this.edgeBetween = edgeBetween;
+	this._edgeBetween = _edgeBetween;
 }
 
 //-------------------------------------------------------------------------------------
@@ -43,6 +45,30 @@ function edgeBetween(edgeLabel, nodeLabels) {
 	return false;
 }
 
+// Same as edgeBetween(), but takes node labels as an array of strings rather than 
+// individual arguments
+function _edgeBetween(edgeLabel, nodeLabelArray) {
+	if (!(edgeLabel in this.edges)) { 
+		return false;
+	}
+	
+	var collectedLabels = "";
+	
+	for (var i = 0; i < nodeLabelArray.length; i++) {
+		if (!(nodeLabelArray[i] in this.nodes)) {
+			return false;
+		}
+		
+		collectedLabels+= nodeLabelArray[i];
+	}
+	
+	if (collectedLabels in this.edges[edgeLabel]) {
+		return true;	
+	}
+	
+	return false;
+}
+
 // Add a new node to the graph with specified label
 //
 //Returns: TRUE iff node successfully created
@@ -61,13 +87,14 @@ function newNode(label) {
 //
 // USAGE: newEdge(<edgeLabel>, <arity>, <node1Label>, <node2Label>, ... <nodeNLabel>)
 //
-// THROWS: "Arity argument mismatch" iff arity does not match number of node args
-// THROWS: "Nonexistent node <nodeName>" iff specified node with name doesn't exist
+// RETURNS: -1 // "Arity argument mismatch" iff arity does not match number of node args
+// RETURNS: -2 // "Nonexistent node <nodeName>" iff specified node with name doesn't exist
+// RETURNS: 0 iff success
 function newEdge(label, arity, nodeLabels) {
-	
 	// check argument number agreement
 	if (arity != arguments.length - 2) {
-		throw "Arity argument mismatch";
+		console.log("Arity argument mismatch");
+		return -1;
 	}
 	
 	collectedLabels = "";
@@ -78,7 +105,7 @@ function newEdge(label, arity, nodeLabels) {
 		var curLabel = arguments[i];
 	
 		if (!(curLabel in this.nodes)) {
-			throw ("Nonexistent node " + curLabel);
+			console.log( ("Nonexistent node " + curLabel));
 		}
 		
 		collectedLabels += curLabel;
@@ -94,7 +121,39 @@ function newEdge(label, arity, nodeLabels) {
 		this.edges[label] = new Object;
 		this.edges[label][collectedLabels] = new Edge(this, label, arity, nodes);
 	}
+
+	return 0;
 	
+}
+
+function _newEdge(label, arity, nodeLabelArray) {
+	
+	collectedLabels = "";
+	
+	// check that member nodes exist
+	for (var i = 0; i < arity; i++) {
+		var curLabel = nodeLabelArray[i];
+	
+		if (!(curLabel in this.nodes)) {
+			console.log( ("Nonexistent node " + curLabel));
+			return -1;
+		}
+		
+		collectedLabels += curLabel;
+		nodes[i] = this.nodes[curLabel];
+	}
+	
+	// check edge is already in graph
+	if (label in this.edges) {
+		this.edges[label][collectedLabels] = new Edge(this, label, arity, nodeLabelArray);
+	} 
+	// else create a new set with this label
+	else {
+		this.edges[label] = new Object;
+		this.edges[label][collectedLabels] = new Edge(this, label, arity, nodeLabelArray);
+	}
+
+	return 0;
 }
 
 // Return a string representation of the Hypergraph 
