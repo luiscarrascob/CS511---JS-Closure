@@ -211,7 +211,7 @@ function makeGraph() {
 
 	// Traverse the introduced nodes and add them to the graph
 	$(".a-node").not(".var").each(function(index){
-		console.log("Adding node: " + $(this).text());
+		//console.log("Adding node: " + $(this).text());
 		graph.newNode($(this).text());
 		graphjson.push({
 			"adjacencies": [],
@@ -262,7 +262,7 @@ function makeGraph() {
 					}
 				});
 				command += ");";
-				console.log(command);
+				//console.log(command);
 				eval(command);
 			});
 		}
@@ -270,7 +270,7 @@ function makeGraph() {
 
 	// Draw the graph and log stuff.
 	fd = drawGraph(graphjson, fd);
-	console.log('graphjson:');
+	console.log('graphjson at the beginning:');
 	console.log(graphjson);
 
 	var count = 0;
@@ -311,17 +311,86 @@ function makeGraph() {
 						});
 	});
 	
-	console.log('assertions:');
-	console.log(assertions);
+	//console.log('assertions:');
+	//console.log(assertions);
     
     //////////////////////////////////////////////////////////////
     // ADDITIONS
+
+	return [graph, assertions];
     
-    transit(graph, assertions);
+    //transit(graph, assertions);
     
     //////////////////////////////////////////////////////////////
     
 };
+
+function drawTheGraph(graph)
+{
+	var graphjson = []; // This is the json array that will be passed into the Hypergraph() to 
+	// perform the transit operation.
+
+	for (node in graph.nodes)
+	{
+		console.log(node);
+		graphjson.push({
+			"adjacencies": [],
+			"id": node,
+			"name": node
+		});
+	}
+
+	console.log("before");
+	console.log(graphjson);
+	//console.log(graph.edges["P"]);
+
+	$.each(graphjson, function(){
+		var currentNode = this;
+		//console.log(currentNode["name"]);
+		for (edgeName in graph.edges)
+		{
+			//console.log("edge name " + edgeName);
+			for (edgeObject in graph.edges[edgeName])
+			{
+				if (currentNode["name"] == edgeObject[0])
+				{
+					currentNode["adjacencies"].push(
+						{
+							"nodeTo": edgeObject[1],
+							"nodeFrom": edgeObject[0],
+							"data": {
+								"$color": getRandomColor(edgeName)
+								}
+						}
+					);
+				}
+			}
+		}
+	});
+
+	console.log("after");
+	console.log(graphjson);
+
+	fd = drawGraph(graphjson, fd);
+	
+	/*$.each(graphjson, function(){
+		if(this["name"] == tempSel.text())
+		{
+			if ( tempSel.next(".node").text() != "" )
+			{
+				this["adjacencies"].push(
+										{
+											"nodeTo": tempSel.next(".node").text(),
+											"nodeFrom": tempSel.text(),
+											"data": {
+												"$color": tempSel.parent().css("background-color")
+													}
+										}
+										);
+			}
+		}
+	});*/
+}
 
 // This function is called every time that a key in pressed
 // inside the input area. It takes the output from the processed

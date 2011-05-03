@@ -66,8 +66,9 @@ function transit(graph, assertions) {
 		}
 		
 		console.log('Num edges added on this iteration ' + numEdgesAdded);
+
 	}
-   
+   return graph;
 }
 
 function VariableMapping(variable, value) {
@@ -167,9 +168,9 @@ function drawPossibleEdges(graph, variableAssignments, assertions) {
             }
             
 		  	if (graph._edgeBetween(edgeName, nodeAdjacencies)) {
-				console.log('Found edge ' + edgeName + ' between ' + nodeAdjacencies[0] +' and ' + nodeAdjacencies[1] +', continuing');
+				//console.log('Found edge ' + edgeName + ' between ' + nodeAdjacencies[0] +' and ' + nodeAdjacencies[1] +', continuing');
 			} else {
-				console.log('No such edge, stopping for this variable mapping');
+				//console.log('No such edge, stopping for this variable mapping');
 				holdingSoFar = false;
 			}
         } else if (curStatement.type == "implies") {
@@ -187,7 +188,7 @@ function drawPossibleEdges(graph, variableAssignments, assertions) {
 				
 				if (!(graph._edgeBetween(edgeName, nodeAdjacencies))) {
 					
-					console.log('Adding edge ' + edgeName + ' between ' + nodeAdjacencies[0] +' and ' + nodeAdjacencies[1] );
+					//console.log('Adding edge ' + edgeName + ' between ' + nodeAdjacencies[0] +' and ' + nodeAdjacencies[1] );
 					graph._newEdge(edgeName, nodeAdjacencies.length, nodeAdjacencies);
 					numEdgesAdded++;
 				}
