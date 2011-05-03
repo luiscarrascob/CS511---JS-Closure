@@ -1,72 +1,103 @@
 function transit(graph, assertions) {
 	var numEdgesAdded = 1;
 	while (numEdgesAdded > 0) {
+		var startPoint = 0;
 		numEdgesAdded = 0;
-	
-		// get the names of the variables of our assertion
-		var variableNames = new Object;
-		var variableNameArray = new Array;
+		while (startPoint < assertions.length) {
 		
-		var numVariables = 0;
-		// look through the first expression and collect all variables mentioned
-		for (var curStatement in assertions) {
-			if (curStatement.type == "implies") {
-				break;
+			// get the names of the variables of our assertion
+			var variableNames = new Object;
+			var variableNameArray = new Array;
+			
+			var numVariables = 0;
+			
+			// advance start point through implies
+			while(assertions[startPoint].type == 'implies' || assertions[startPoint].type == 'node') {
+				startPoint++;
+			}
+
+			var thisStatement = new Object;
+			var thisStatementIndex = 0;
+			var lookingAtImplies = false;
+			// look through the expression, collect out only the functions of the current
+			// statement and collect relevant variables
+			for (var curStatement = startPoint; curStatement < assertions.length; curStatement++) {
+				if (assertions[curStatement].type != 'node') {
+					if (assertions[curStatement].type == 'implies') {
+						lookingAtImplies = true;
+					}
+					
+					if (lookingAtImplies && assertions[curStatement].type == 'assert') {
+						break;
+					}
+					
+					for (var cur in assertions[curStatement].adjacencies) {
+						var curVar = assertions[curStatement].adjacencies[cur];
+						if (!(curVar in variableNames)) {
+							variableNames[curVar] = curVar;
+							variableNameArray[numVariables] = curVar;
+							numVariables++;
+						}
+					}
+					
+					thisStatement[thisStatementIndex] = assertions[curStatement];
+					
+					thisStatementIndex++;
+				}
+				startPoint++;
+			}
+			if (thisStatementIndex > 0) {
+				var nodeList = graph.nodes
+				var variableMappings = new Object;
+				
+				// initialize a data structure of variable mappings to all point to the first node
+				var firstNodeName = "";
+				
+				for (var cur in nodeList) {
+					firstNodeName = nodeList[cur].label;	
+					break;
+				}
+				
+				var i = 0;
+				for (var thisLabel in variableNames) {
+					variableMappings[variableNameArray[i]] = new VariableMapping(thisLabel, firstNodeName);
+					i++;
+				}
+				
+				console.log('variableMappings');
+				console.log(variableMappings);
+					
+						
+				var mapVariablesAndEval = "";
+				
+				//for (var j)
+				
+				
+				// create all possible mappings of variables to nodes in the graph
+				for (var n0 in nodeList) {
+					var var0 = variableNameArray[0];
+					variableMappings[var0].value = nodeList[n0].label;
+					for (var n1 in nodeList) {
+						var var1 = variableNameArray[1];
+						variableMappings[var1].value = nodeList[n1].label;
+						for (var n2 in nodeList) {
+							var var2 = variableNameArray[2];
+							variableMappings[var2].value = nodeList[n2].label;
+							
+							//console.log(var0 + ' ' + variableMappings[var0].value);
+							//console.log(var1 + ' ' + variableMappings[var1].value);
+							//console.log(var2 + ' ' + variableMappings[var2].value);
+							
+							numEdgesAdded += drawPossibleEdges(graph, variableMappings, thisStatement);
+						}
+					}
+				}
 			}
 			
-			for (cur in assertions[curStatement].adjacencies) {
-				var curVar = assertions[curStatement].adjacencies[cur];
-				if (!(curVar in variableNames)) {
-					variableNames[curVar] = curVar;
-					variableNameArray[numVariables] = curVar;
-					numVariables++;
-				}
-			}
+			
+	
 		}
-		
-		var nodeList = graph.nodes
-		var variableMappings = new Object;
-		
-		// initialize a data structure of variable mappings to all point to the first node
-		var firstNodeName = "";
-		
-		for (var cur in nodeList) {
-			firstNodeName = nodeList[cur].label;	
-			break;
-		}
-		
-		var i = 0;
-		for (var thisLabel in variableNames) {
-			variableMappings[variableNameArray[i]] = new VariableMapping(thisLabel, firstNodeName);
-			i++;
-		}
-		
-		console.log('variableMappings');
-		console.log(variableMappings);
-		
-		var i = 0;
-		// create all possible mappings of variables to nodes in the graph
-		for (var n0 in nodeList) {
-			var var0 = variableNameArray[0];
-			variableMappings[var0].value = nodeList[n0].label;
-			for (var n1 in nodeList) {
-				var var1 = variableNameArray[1];
-				variableMappings[var1].value = nodeList[n1].label;
-				for (var n2 in nodeList) {
-					var var2 = variableNameArray[2];
-					variableMappings[var2].value = nodeList[n2].label;
-					
-					//console.log(var0 + ' ' + variableMappings[var0].value);
-					//console.log(var1 + ' ' + variableMappings[var1].value);
-					//console.log(var2 + ' ' + variableMappings[var2].value);
-					
-					numEdgesAdded += drawPossibleEdges(graph, variableMappings, assertions);
-				}
-			}
-		}
-		
 		console.log('Num edges added on this iteration ' + numEdgesAdded);
-
 	}
    return graph;
 }
