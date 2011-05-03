@@ -359,7 +359,7 @@ function drawTheGraph(graph)
 							"nodeTo": edgeObject[1],
 							"nodeFrom": edgeObject[0],
 							"data": {
-								"$color": "#FFFF00"
+								"$color": getRandomColor(edgeName)
 								}
 						}
 					);

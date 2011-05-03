@@ -101,7 +101,7 @@ function drawGraph ( json, fd ){
     fd = new $jit.ForceDirected({
     //id of the visualization container
     injectInto: 'infovis',
-  	height: 700, 
+  	height: 650, 
     //Enable zooming and panning
     //by scrolling and DnD
     Navigation: {
