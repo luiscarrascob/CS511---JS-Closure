@@ -327,6 +327,7 @@ function makeGraph() {
 
 function drawTheGraph(graph)
 {
+	var outputHTML = "";
 	var graphjson = []; // This is the json array that will be passed into the Hypergraph() to 
 	// perform the transit operation.
 
@@ -345,10 +346,14 @@ function drawTheGraph(graph)
 	//console.log(graph.edges["P"]);
 
 	var nodesToAdd = [];
+	outputHTML += "<h3>Added the following edges</h3><div class='clear'></div>";
 	for (edgeName in graph.edges)
 	{
 		for (edgeObject in graph.edges[edgeName])
 		{
+			outputHTML += "<span class='edge result'><a>" + edgeName + "</a>" + 
+							"<span class='nodes' style='background-color:" + getRandomColor(edgeName) + ";'><span class='node'>" + edgeObject + "</span></span>" +
+							"</span>";
 			var numNodes = edgeObject.length;
 			for (var i=0; i < numNodes-1; i++)
 			{
@@ -359,7 +364,7 @@ function drawTheGraph(graph)
 			}
 		}
 	}
-
+	outputHTML += '<div class="clear"></div>'
 	console.log("Nodes to add: " + nodesToAdd.length);
 
 	$.each(graphjson, function(){
@@ -392,7 +397,8 @@ function drawTheGraph(graph)
 	console.log(graphjson);
 
 	fd = drawGraph(graphjson, fd);
-	
+
+	return outputHTML;
 }
 
 // This function is called every time that a key in pressed

@@ -51,7 +51,8 @@ $(document).ready(function(){
 		graph = transit(graph, assertions);
 		console.log("Graph after edges drawn:");
 		console.log(graph);
-		drawTheGraph(graph);
+		var outputText = drawTheGraph(graph);
+		$("div.#transitoutput").html(outputText);
 	});
 });
 
