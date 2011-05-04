@@ -8,6 +8,7 @@ var ctx;						//Canvas variable
 // MAIN
 $(document).ready(function(){
 
+	$("#message").hide();
 	var firstTime = true;
 	var firstTimeButton = true;
 
@@ -22,11 +23,11 @@ $(document).ready(function(){
 	//update();
 	$("#input").keyup(function(){
 		update();
-		if ( firstTime )
+		/*if ( firstTime )
 		{
 			$.scrollTo( $(this).prev("h2"), 800);
 			firstTime = false;
-		}
+		}*/
 	});
 
 	$("#submit-button").click(function () { 
@@ -39,11 +40,11 @@ $(document).ready(function(){
 		console.log(graph);
 		console.log(assertions);
 		
-		if ( firstTimeButton )
+		/*if ( firstTimeButton )
 		{
 			$.scrollTo( $("#infovis").prev("h2"), 800);
 			firstTimeButton = false;
-		}
+		}*/
 	});
 
 	$("#transit-button").click(function () {

@@ -344,52 +344,55 @@ function drawTheGraph(graph)
 	console.log(graphjson);
 	//console.log(graph.edges["P"]);
 
-	$.each(graphjson, function(){
-		var currentNode = this;
-		//console.log(currentNode["name"]);
-		for (edgeName in graph.edges)
+	var nodesToAdd = [];
+	for (edgeName in graph.edges)
+	{
+		for (edgeObject in graph.edges[edgeName])
 		{
-			//console.log("edge name " + edgeName);
-			for (edgeObject in graph.edges[edgeName])
+			var numNodes = edgeObject.length;
+			for (var i=0; i < numNodes-1; i++)
 			{
-				if (currentNode["name"] == edgeObject[0])
+				if (edgeObject[i] != edgeObject[i+1])
 				{
-					currentNode["adjacencies"].push(
-						{
-							"nodeTo": edgeObject[1],
-							"nodeFrom": edgeObject[0],
-							"data": {
-								"$color": getRandomColor(edgeName)
-								}
-						}
-					);
+					nodesToAdd.push([edgeObject[i], edgeObject[i+1], edgeName])
 				}
 			}
 		}
-	});
+	}
 
+	console.log("Nodes to add: " + nodesToAdd.length);
+
+	$.each(graphjson, function(){
+		var currentNode = this;
+		var temp = [];
+		console.log("Iterations for " + currentNode["name"] + " = " + nodesToAdd.length);
+		for (var i = 0; i < nodesToAdd.length; i++)
+		{
+			if (currentNode["name"] == nodesToAdd[i][0])
+			{
+				currentNode["adjacencies"].push(
+						{
+							"nodeTo": nodesToAdd[i][1],
+							"nodeFrom": nodesToAdd[i][0],
+							"data": {
+								"$color": getRandomColor(nodesToAdd[i][2])
+								}
+						}
+					);
+			}
+			else
+			{
+				temp.push(nodesToAdd[i]);
+			}
+		}
+		nodesToAdd = temp;
+	});
+	
 	console.log("after");
 	console.log(graphjson);
 
 	fd = drawGraph(graphjson, fd);
 	
-	/*$.each(graphjson, function(){
-		if(this["name"] == tempSel.text())
-		{
-			if ( tempSel.next(".node").text() != "" )
-			{
-				this["adjacencies"].push(
-										{
-											"nodeTo": tempSel.next(".node").text(),
-											"nodeFrom": tempSel.text(),
-											"data": {
-												"$color": tempSel.parent().css("background-color")
-													}
-										}
-										);
-			}
-		}
-	});*/
 }
 
 // This function is called every time that a key in pressed

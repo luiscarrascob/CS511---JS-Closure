@@ -32,12 +32,11 @@
     <div id="intro">
     		<h2>Description</h2>
     		<p>First introduce the variables using:</p>
-    		<p class="example">intro x,y,z.</p>
+    		<p class="example">intro x,y,z,a,b,c.</p>
     		<p>Then make the assumptions using:</p>
-    		<p class="example">assume "P"(x,y) "P"(y,z) "Q"(z,x)</p>
+    		<p class="example">assume "P"(x,y,z) "P"(a,b,c)</p>
     		<p>Finally make the assertions using:</p>
-    		<p class="example">for all x,y,z.  "<"(x,y) and "<"(y,z) implies "<"(x,z)</p>
-		<p class="example">for all i,j. "<"(i,j) and ">"(i,j) implies "contradiction"()</p>
+    		<p class="example">for all i,j,k,l,m,n. "P"(i,j,k) and "P"(l,m,n) implies "Q"(i,l)</p>
     		<p>and constructs a hypergraph to validate statements</p>
     </div>
     <div id="log"></div>
@@ -72,6 +71,10 @@
     		<div id="submit-button">Make graph</div>
 		<div id="transit-button">Transit</div>
 		<div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div id="message">
+   		<p>Making the graph</p>
     </div>
     <div class="clear"></div>
     <h2>Graph</h2>
