@@ -38,8 +38,15 @@
     		<p>Finally make the assertions using:</p>
     		<p class="example">for all i,j,k,l,m,n. "P"(i,j,k) and "P"(l,m,n) implies "Q"(i,l)</p>
     		<p>and constructs a hypergraph to validate statements</p>
+    		</br>
+    		<p><a href="test-cases.txt">Test Cases</a></p>
     </div>
     <div id="log"></div>
+    <div class="clear"></div>
+    <div id="buttons-new">
+    		<div id="propositional-button" class="but">Use Propositional Logic</div>
+		<div class="clear"></div>
+    </div>
     <div class="clear"></div>
     <div id="body">
         <div id="body-left" class="left">
@@ -69,7 +76,7 @@
     <div class="clear"></div>
     <div id="buttons">
     		<div id="submit-button">Make graph</div>
-		<div id="transit-button">Transit</div>
+		<div id="transit-button">Closure</div>
 		<div class="clear"></div>
     </div>
     <div class="clear"></div>
@@ -80,7 +87,9 @@
     <h2>Graph</h2>
     <div id="infovis"></div>
 	<div class="clear"></div>
-	<h2>Output</h2>
+	<h2 class="block">Output</h2>
+	<div class="time"><p>Time Elapsed: <span id="timem">0</span><span class="msec"> msec</span></p></div>
+	<div class="clear"></div>
 	<div id="transitoutput">
    		<p>Output Will be here</p>
     </div>

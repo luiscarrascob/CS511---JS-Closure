@@ -47,8 +47,38 @@ $(document).ready(function(){
 		}*/
 	});
 
+	$("#propositional-button").click(function () {
+		var text = $("#input").html();
+		text += '\n\n\nfor all a,b,x. "is_impl_of"(x,a,b) and "true"(a) and "true"(x) implies "true"(b)\n';
+		text += 'for all a,b,x. "is_impl_of"(x,a,b) and "false"(a) and "true"(x) implies "false"(b)\n';
+		text += 'for all a,b,x. "is_impl_of"(x,a,b) and "true"(b) implies "true"(x)\n';
+		text += 'for all a,b,x. "is_impl_of"(x,a,b) and "true"(a) and "false"(b) implies "false"(x)\n';
+		text += 'for all a,b,x. "is_impl_of"(x,a,b) and "true"(a) and "false"(x) implies "false"(b)\n';
+		text += 'for all a,b,x. "is_impl_of"(x,a,b) and "false"(a) and "false"(b) implies "true"(x)\n';
+		text += 'for all a,b,x. "is_impl_of"(x,a,b) and "false"(a) and "true"(b) implies "true"(x)\n';
+		text += 'for all a,b,x. "is_conj_of"(x,a,b) and "true"(a) and "true"(b) implies "true"(x)\n';
+		text += 'for all a,b,x. "is_conj_of"(x,a,b) and "true"(a) and "true"(x) implies "true"(b)\n';
+		text += 'for all a,b,x. "is_conj_of"(x,a,b) and "true"(b) and "true"(x) implies "true"(a)\n';
+		text += 'for all a,b,x. "is_conj_of"(x,a,b) and "false"(a) implies "false"(x)\n';
+		text += 'for all a,b,x. "is_conj_of"(x,a,b) and "false"(b) implies "false"(x)\n';
+		text += 'for all a,b,x. "is_conj_of"(x,a,b) and "true"(a) and "false"(x) implies "false"(b)\n';
+		text += 'for all a,b,x. "is_conj_of"(x,a,b) and "true"(b) and "false"(x) implies "false"(a)\n';
+		text += 'for all a,b,x. "is_disj_of"(x,a,b) and "true"(a) implies "true"(x)\n';
+		text += 'for all a,b,x. "is_disj_of"(x,a,b) and "true"(b) implies "true"(x)\n';
+		text += 'for all a,b,x. "is_disj_of"(x,a,b) and "false"(a) and "false"(b) implies "false"(x)\n';
+		text += 'for all a,b,x. "is_disj_of"(x,a,b) and "false"(a) and "true"(x) implies "true"(b)\n';
+		text += 'for all a,b,x. "is_disj_of"(x,a,b) and "false"(b) and "true"(x) implies "true"(a)\n';
+
+		$("#input").html(text);
+		
+		update();
+	});
+
 	$("#transit-button").click(function () {
+		var execStartTime = new Date().getTime();
 		graph = transit(graph, assertions);
+		var elapsed = new Date().getTime() - execStartTime;
+		$("#timem").html(elapsed);
 		console.log("Graph after edges drawn:");
 		console.log(graph);
 		var outputText = drawTheGraph(graph);
