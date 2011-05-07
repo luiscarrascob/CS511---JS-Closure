@@ -1,5 +1,6 @@
 function transit(graph, assertions) {
 	var numEdgesAdded = 1;
+	var execStartTime = new Date().getTime();
 	while (numEdgesAdded > 0) {
 		var startPoint = 0;
 		numEdgesAdded = 0;
@@ -121,6 +122,9 @@ function transit(graph, assertions) {
 		}
 		console.log('Num edges added on this iteration ' + numEdgesAdded);
 	}
+	
+	var elapsed = new Date().getTime() - execStartTime;
+	console.log('Execution time for transitive closure operation: ' + elapsed);
    return graph;
 }
 
@@ -208,8 +212,10 @@ function drawPossibleEdges(graph, variableAssignments, assertions) {
     	var edgeName = curStatement["edge-name"];
 
         if (curStatement.type == "assert") {
-            consideringAssertions = true;
-            holdingSoFar = true;
+            if (!consideringAssertions) {
+            	consideringAssertions = true;
+           		holdingSoFar = true;
+           	}
             
             var nodeAdjacencies = new Array(curStatement.adjacencies.length);
             

@@ -1,0 +1,98 @@
+---- TEST CASES ----
+
+---- ALL PROPOSITIONAL LOGIC RULES -----
+for all a,b,x. "is_impl_of"(x,a,b) and "true"(a) and "true"(x) implies "true"(b)
+for all a,b,x. "is_impl_of"(x,a,b) and "false"(a) and "true"(x) implies "false"(b)
+for all a,b,x. "is_impl_of"(x,a,b) and "true"(b) implies "true"(x)
+for all a,b,x. "is_impl_of"(x,a,b) and "true"(a) and "false"(b) implies "false"(x)
+for all a,b,x. "is_impl_of"(x,a,b) and "true"(a) and "false"(x) implies "false"(b)
+for all a,b,x. "is_impl_of"(x,a,b) and "false"(a) and "false"(b) implies "true"(x)
+for all a,b,x. "is_impl_of"(x,a,b) and "false"(a) and "true"(b) implies "true"(x)
+for all a,b,x. "is_conj_of"(x,a,b) and "true"(a) and "true"(b) implies "true"(x)
+for all a,b,x. "is_conj_of"(x,a,b) and "true"(a) and "true"(x) implies "true"(b)
+for all a,b,x. "is_conj_of"(x,a,b) and "true"(b) and "true"(x) implies "true"(a)
+for all a,b,x. "is_conj_of"(x,a,b) and "false"(a) implies "false"(x)
+for all a,b,x. "is_conj_of"(x,a,b) and "false"(b) implies "false"(x)
+for all a,b,x. "is_conj_of"(x,a,b) and "true"(a) and "false"(x) implies "false"(b)
+for all a,b,x. "is_conj_of"(x,a,b) and "true"(b) and "false"(x) implies "false"(a)
+for all a,b,x. "is_disj_of"(x,a,b) and "true"(a) implies "true"(x)
+for all a,b,x. "is_disj_of"(x,a,b) and "true"(b) implies "true"(x)
+for all a,b,x. "is_disj_of"(x,a,b) and "false"(a) and "false"(b) implies "false"(x)
+for all a,b,x. "is_disj_of"(x,a,b) and "false"(a) and "true"(x) implies "true"(b)
+for all a,b,x. "is_disj_of"(x,a,b) and "false"(b) and "true"(x) implies "true"(a)
+
+---- IMPLICATION -----
+expressing (A -> B)
+
+intro A, B, X.
+assume "is_impl_of"(X,A,B) "true"(A) "true"(X)
+-- MODUS TOLENS -- 
+for all a,b,x. "is_impl_of"(x,a,b) and "true"(a) and "true"(x) implies "true"(b)
+-- MODUS PONENS --
+for all a,b,x. "is_impl_of"(x,a,b) and "false"(a) and "true"(x) implies "false"(b)
+for all a,b,x. "is_impl_of"(x,a,b) and "true"(b) implies "true"(x)
+for all a,b,x. "is_impl_of"(x,a,b) and "true"(a) and "false"(b) implies "false"(x)
+for all a,b,x. "is_impl_of"(x,a,b) and "true"(a) and "false"(x) implies "false"(b)
+for all a,b,x. "is_impl_of"(x,a,b) and "false"(a) and "false"(b) implies "true"(x)
+for all a,b,x. "is_impl_of"(x,a,b) and "false"(a) and "true"(b) implies "true"(x)
+
+
+---- CONJUNCTION ----
+expressing (A ^ B)
+
+intro A, B, X.
+assume "is_conj_of"(X,A,B) "true"(A) "true"(B)
+-- AND INTRODUCTION --
+for all a,b,x. "is_conj_of"(x,a,b) and "true"(a) and "true"(b) implies "true"(x)
+for all a,b,x. "is_conj_of"(x,a,b) and "false"(a) implies "false"(x)
+for all a,b,x. "is_conj_of"(x,a,b) and "false"(b) implies "false"(x)
+-- AND ELIMINATION --
+for all a,b,x. "is_conj_of"(x,a,b) and "true"(a) and "true"(x) implies "true"(b)
+for all a,b,x. "is_conj_of"(x,a,b) and "true"(b) and "true"(x) implies "true"(a)
+for all a,b,x. "is_conj_of"(x,a,b) and "true"(a) and "false"(x) implies "false"(b)
+for all a,b,x. "is_conj_of"(x,a,b) and "true"(b) and "false"(x) implies "false"(a)
+
+---- DISJUNCTION ----
+expressing (A v B)
+
+intro A,B,X.
+assume "is_disj_of"(X,A,B) "true"(A)
+-- OR INTRODUCTION --
+for all a,b,x. "is_disj_of"(x,a,b) and "true"(a) implies "true"(x)
+for all a,b,x. "is_disj_of"(x,a,b) and "true"(b) implies "true"(x)
+for all a,b,x. "is_disj_of"(x,a,b) and "false"(a) and "false"(b) implies "false"(x)
+for all a,b,x. "is_disj_of"(x,a,b) and "false"(a) and "true"(x) implies "true"(b)
+for all a,b,x. "is_disj_of"(x,a,b) and "false"(b) and "true"(x) implies "true"(a)
+
+
+---- PROPOSITIONAL LOGIC FORMULAS ----
+expressing (A -> (B v (A v C)))
+
+intro A,B,C,X,Y,Z.
+assume "is_disj_of"(X,A,C) "is_disj_of"(Y,B,X) "is_impl_of"(Z,A,Y)
+
+
+
+expressing (A ^ ((B v C) ^ D)) -> (~(~D))
+
+intro A,B,C,D,E,F,G,H.
+assume "is_disj_of"(E,B,C) "is_conj_of"(F,E,D) "is_conj_of"(G,A,F) "is_impl_of"(H,G,D)assume "is_disj_of"(E,B,C) "is_conj_of"(F,E,D) "is_conj_of"(G,A,F) "is_impl_of"(H,G,D)
+
+
+expressing ((A -> B) ^ (B->C) ^ A) -> (B ^ C)
+
+intro A,B,C,D,E,F,G,H,I.
+assume "is_impl_of"(D,A,B) "is_impl_of"(E,B,C) "is_conj_of"(F,B,C) "is_conj_of"(I,E,A) "is_conj_of"(G,D,I) "is_impl_of"(H,G,F)
+
+
+
+
+
+---- PERFORMANCE TEST CASES -----
+
+intro A,B,C,D,E,F,G,H,I,J,K.
+assume "P"(A,B,C,D,E)
+
+
+
+

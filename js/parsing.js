@@ -346,7 +346,7 @@ function drawTheGraph(graph)
 	//console.log(graph.edges["P"]);
 
 	var nodesToAdd = [];
-	outputHTML += "<h3>Added the following edges</h3><div class='clear'></div>";
+	outputHTML += "<h3>Edges contained in the graph</h3><div class='clear'></div>";
 	for (edgeName in graph.edges)
 	{
 		for (edgeObject in graph.edges[edgeName])
