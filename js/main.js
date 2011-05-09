@@ -48,7 +48,7 @@ $(document).ready(function(){
 	});
 
 	$("#propositional-button").click(function () {
-		var text = $("#input").html();
+		var text = $("#input").text();
 		text += '\n\n\nfor all a,b,x. "is_impl_of"(x,a,b) and "true"(a) and "true"(x) implies "true"(b)\n';
 		text += 'for all a,b,x. "is_impl_of"(x,a,b) and "false"(a) and "true"(x) implies "false"(b)\n';
 		text += 'for all a,b,x. "is_impl_of"(x,a,b) and "true"(b) implies "true"(x)\n';
@@ -84,9 +84,17 @@ $(document).ready(function(){
 		
 		var shouldDraw = 1;
 		if (elapsed > 3000) shouldDraw = 0;
-		
-		var outputText = drawTheGraph(graph, shouldDraw);
-		$("div.#transitoutput").html(outputText);
+
+		if (shouldDraw)
+		{
+			var outputText = drawTheGraph(graph, shouldDraw);
+			$("div.#transitoutput").html(outputText);
+		}
+		else
+		{
+			var outputText = simpleGraph(graph);
+			$("div.#transitoutput").html(outputText);
+		}
 	});
 });
 

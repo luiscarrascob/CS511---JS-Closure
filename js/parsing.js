@@ -404,6 +404,20 @@ function drawTheGraph(graph, shouldDraw)
 	return outputHTML;
 }
 
+function simpleGraph(graph)
+{
+	var count = 0;
+	for (edgeName in graph.edges)
+	{
+		for (edgeObject in graph.edges[edgeName])
+		{
+			count ++;
+		}
+	}
+	alert("Wow: that was hard!");
+	return "<p> Added: " + count + " edges</p>";
+}
+
 // This function is called every time that a key in pressed
 // inside the input area. It takes the output from the processed
 // input string and writes to the right divs.
