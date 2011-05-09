@@ -81,7 +81,11 @@ $(document).ready(function(){
 		$("#timem").html(elapsed);
 		console.log("Graph after edges drawn:");
 		console.log(graph);
-		var outputText = drawTheGraph(graph);
+		
+		var shouldDraw = 1;
+		if (elapsed > 3000) shouldDraw = 0;
+		
+		var outputText = drawTheGraph(graph, shouldDraw);
 		$("div.#transitoutput").html(outputText);
 	});
 });
