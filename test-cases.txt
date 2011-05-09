@@ -97,6 +97,12 @@ expressing (((A ^ B) ^ C) ^ D) -> (D ^ (C ^ (B ^ A)))
 intro A,B,C,D,E,F,G,H,I,J,K.
 assume "is_conj_of"(E,A,B) "is_conj_of"(F,E,C) "is_conj_of"(G,F,D) "is_conj_of"(H,B,A) "is_conj_of"(I,C,H) "is_conj_of"(J,D,I) "is_impl_of"(K,G,J) "true"(A) "false"(B) "true"(C) "false"(D)
 
+---- PERFORMANCE TEST CASES -----
+
+intro A,B,C,D,E,F,G,H,I,J,K.
+assume "P"(A,B,C,D)
+for all a,b,c,d,e. "P"(a,b,c,d) implies "P"(b,c,d,e)
+
 
 
 
