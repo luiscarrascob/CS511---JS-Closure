@@ -86,12 +86,16 @@ assume "is_impl_of"(D,A,B) "is_impl_of"(E,B,C) "is_conj_of"(F,B,C) "is_conj_of"(
 
 
 
+expressing ((A->C) ^ (B->C) ^ (A v B)) -> C
+
+intro A,B,C,D,E,F,H,I,J.
+assume "is_impl_of"(D,A,C) "is_impl_of"(E,B,C) "is_impl_of"(J,I,C) "is_conj_of"(H,D,E) "is_conj_of"(I,H,F) "is_disj_of"(F,A,B)
 
 
----- PERFORMANCE TEST CASES -----
+expressing (((A ^ B) ^ C) ^ D) -> (D ^ (C ^ (B ^ A)))
 
 intro A,B,C,D,E,F,G,H,I,J,K.
-assume "P"(A,B,C,D,E)
+assume "is_conj_of"(E,A,B) "is_conj_of"(F,E,C) "is_conj_of"(G,F,D) "is_conj_of"(H,B,A) "is_conj_of"(I,C,H) "is_conj_of"(J,D,I) "is_impl_of"(K,G,J) "true"(A) "false"(B) "true"(C) "false"(D)
 
 
 
