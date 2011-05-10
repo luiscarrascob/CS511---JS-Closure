@@ -8,14 +8,14 @@
                                       |_|                              
 
 Luis Carrasco 	[luiscarr@bu.edu]
-Gordon Towne		[gtowne@bu.edu]
+Gordon Towne	[gtowne@bu.edu]
 
 Object-Oriented Software Principles - S2011
 Client-side Transitive Closure Computation
 
 http://oop.lcarrasco.com/ 							[project description website]
 http://oop.lcarrasco.com/project/ 					[project implementation]
-https://github.com/luiscarrascob/CS511---JS-Closure 	[repository]
+https://github.com/luiscarrascob/CS511---JS-Closure [repository]
 
 
 Source Tree
@@ -40,7 +40,7 @@ Source Tree
 	-Transit.js				[implements the transit and closure procedures]
 	-canvas.js				[initialized the graph canvas object]
 	-drawing.js				[source code from infoVis to draw the graph]
-	-main.js					[sets up event handlers. Entry point for all functionality]
+	-main.js				[sets up event handlers. Entry point for all functionality]
 	-parsing.js				[parses input, draws graph, produces output]
 	-randColor.js			[keeps track of color and color associations]
 	-scroll.js				[implements autimatic scrolling. Currently not used]
