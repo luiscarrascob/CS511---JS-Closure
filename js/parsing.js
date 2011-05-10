@@ -325,7 +325,7 @@ function makeGraph() {
     
 };
 
-function drawTheGraph(graph)
+function drawTheGraph(graph, shouldDraw)
 {
 	var outputHTML = "";
 	var graphjson = []; // This is the json array that will be passed into the Hypergraph() to 
@@ -396,9 +396,26 @@ function drawTheGraph(graph)
 	console.log("after");
 	console.log(graphjson);
 
-	fd = drawGraph(graphjson, fd);
+	if (shouldDraw)
+	{
+		fd = drawGraph(graphjson, fd);
+	}
 
 	return outputHTML;
+}
+
+function simpleGraph(graph)
+{
+	var count = 0;
+	for (edgeName in graph.edges)
+	{
+		for (edgeObject in graph.edges[edgeName])
+		{
+			count ++;
+		}
+	}
+	alert("Wow: that was hard!");
+	return "<p> Added: " + count + " edges</p>";
 }
 
 // This function is called every time that a key in pressed
