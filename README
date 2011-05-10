@@ -1,0 +1,51 @@
+ _____                     ______            _              
+|_   _|                    | ___ \          | |             
+  | | ___  __ _ _ __ ___   | |_/ /__ _ _ __ | |_  ___  _ __ 
+  | |/ _ \/ _` | '_ ` _ \  |    // _` | '_ \| __|/ _ \| '__|
+  | |  __/ (_| | | | | | | | |\ \ (_| | |_) | |_| (_) | |   
+  \_/\___|\__,_|_| |_| |_| \_| \_\__,_| .__/ \__|\___/|_|   
+                                      | |                   
+                                      |_|                              
+
+Luis Carrasco 	[luiscarr@bu.edu]
+Gordon Towne		[gtowne@bu.edu]
+
+Object-Oriented Software Principles - S2011
+Client-side Transitive Closure Computation
+
+http://oop.lcarrasco.com/ 							[project description website]
+http://oop.lcarrasco.com/project/ 					[project implementation]
+https://github.com/luiscarrascob/CS511---JS-Closure 	[repository]
+
+
+Source Tree
++css
+	-master.css 				[all styles for the website are here]
++img
+	-arrow-right-small-2.gif
+	-arrow-right-small.gif
+	-arrow-right.png
+	-assert.png
+	-bg.jpg
+	-check.gif
+	-check.png
+	-false.png
+	-favicon.png
+	-loader.gif
+	-lock.png
+	-logo.png
++js
+	-GraphTest.js			[unit test for the graph data structure]
+	-HyperGraph.js			[graph data sctructure]
+	-Transit.js				[implements the transit and closure procedures]
+	-canvas.js				[initialized the graph canvas object]
+	-drawing.js				[source code from infoVis to draw the graph]
+	-main.js					[sets up event handlers. Entry point for all functionality]
+	-parsing.js				[parses input, draws graph, produces output]
+	-randColor.js			[keeps track of color and color associations]
+	-scroll.js				[implements autimatic scrolling. Currently not used]
++tech report
+	-report.odt				[report source]
+	-report.pdf				[report pdf]
+-index.html					[main html file for the project]
+-test-cases.txt				[all test cases implemented from andrei's website. other test cases also included]
